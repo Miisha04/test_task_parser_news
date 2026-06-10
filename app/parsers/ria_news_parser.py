@@ -13,7 +13,7 @@ class RiaNewsParser(BaseParser):
     
     base_url = settings.ria_news_url
 
-    async def parse(self, topic: str, session: ClientSession):
+    async def parse(self, topic: str | None, session: ClientSession):
         try:
             response = await session.get(self.base_url)
             

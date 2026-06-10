@@ -27,10 +27,7 @@ addition_status_enum = postgresql.ENUM(
 
 
 def upgrade() -> None:
-    # enum
-    addition_status_enum.create(op.get_bind())
 
-    # news
     op.create_table(
         "news",
         sa.Column("id", sa.Integer(), primary_key=True),
@@ -178,5 +175,3 @@ def downgrade() -> None:
     )
 
     op.drop_table("news")
-
-    addition_status_enum.drop(op.get_bind())

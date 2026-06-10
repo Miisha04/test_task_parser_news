@@ -31,9 +31,9 @@ class News(Base):
     source: Mapped[str] = mapped_column(String(512), nullable=False)
     publication_date: Mapped[datetime] = mapped_column(Date, nullable=False)
     announcement: Mapped[str | None] = mapped_column(Text)
-
+    
     addition_status: Mapped[AdditionStatus] = mapped_column(
-        SAEnum(AdditionStatus),
+        SAEnum(AdditionStatus, values_callable=lambda x: [e.value for e in x]),
         default=AdditionStatus.PENDING,
         nullable=False,
         index=True,

@@ -6,19 +6,18 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 from app.database import Base
+from app.settings import get_settings
+
+app_settings = get_settings()
 
 config = context.config
 
-DB_USER = os.getenv("DB_USER")
-DB_PASS = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
+DB_USER = app_settings.db_user
+DB_PASS = app_settings.db_password
+DB_HOST = app_settings.db_host
+DB_PORT = app_settings.db_port
+DB_NAME = app_settings.db_name
 
 DATABASE_URL = (
     f"postgresql://{DB_USER}:{DB_PASS}@"
