@@ -28,18 +28,6 @@ async def load_news(
     return await news_service.load_all_news(db, http_client, sources, extended_limit)
 
 
-@router.get(
-    "/load",
-    status_code=status.HTTP_200_OK,
-)
-async def load_news_legacy(
-    db: AsyncSession = Depends(get_db),
-    http_client=Depends(get_http_client),
-    source: str | None = Query(None),
-):
-    return await news_service.load_short_news(db, http_client, source)
-
-
 @router.post(
     "/load/short",
     status_code=status.HTTP_200_OK,
