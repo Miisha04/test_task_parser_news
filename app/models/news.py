@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 import enum
 
 from sqlalchemy import (
@@ -29,9 +29,10 @@ class News(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(512), nullable=False)
     source: Mapped[str] = mapped_column(String(512), nullable=False)
-    publication_date: Mapped[datetime] = mapped_column(Date, nullable=False)
+    url: Mapped[str] = mapped_column(String(2048), nullable=False, unique=True, index=True)
+    publication_date: Mapped[date] = mapped_column(Date, nullable=False)
     announcement: Mapped[str | None] = mapped_column(Text)
-    
+
     addition_status: Mapped[AdditionStatus] = mapped_column(
         SAEnum(AdditionStatus, values_callable=lambda x: [e.value for e in x]),
         default=AdditionStatus.PENDING,

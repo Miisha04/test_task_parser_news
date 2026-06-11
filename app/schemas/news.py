@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 
 from pydantic import BaseModel, ConfigDict
 
@@ -8,36 +8,52 @@ from app.models.news import AdditionStatus
 class NewsShortBase(BaseModel):
     title: str
     source: str
-    publication_date: datetime
+    publication_date: date
     announcement: str | None
     addition_status: AdditionStatus
+    url: str
 
     model_config = ConfigDict(from_attributes=True)
 
+
 class NewsShortCreate(NewsShortBase):
     pass
+
 
 class NewsShortResponse(NewsShortBase):
     id: int
 
 
-class NewsAdditionResponse(BaseModel):
-    full_text: str | None
-    author: str | None
-    images: list[dict] | None
-    categories: list[str] | None
-    tags: list[str] | None
-    key_words: list[str] | None
-    summary: str | None
-    views_amount: int
-    extra_metadata: dict | None
+class NewsAdditionBase(BaseModel):
+    full_text: str | None = None
+    author: str | None = None
+    images: list[dict] | None = None
+    categories: list[str] | None = None
+    tags: list[str] | None = None
+    key_words: list[str] | None = None
+    summary: str | None = None
+    views_amount: int = 0
+    extra_metadata: dict | None = None
+
+    model_config = ConfigDict(from_attributes=True)
 
 
-class NewsDetailsResponse(BaseModel):
-    id: int
+class NewsExtendedBase(BaseModel):
     title: str
     source: str
-    publication_date: datetime
+    url: str
+    publication_date: date
     announcement: str | None
     addition_status: AdditionStatus
-    addition: NewsAdditionResponse | None
+    addition: NewsAdditionBase | None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class NewsExtendedCreate(NewsAdditionBase):
+    pass
+
+
+class NewsExtendedResponse(NewsExtendedBase):
+    id: int
+
